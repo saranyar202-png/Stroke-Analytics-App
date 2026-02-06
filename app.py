@@ -55,6 +55,15 @@ import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
 
+import joblib
+
+model = joblib.load("model.pkl")
+
+import pickle
+
+with open("model.pkl", "rb") as file:
+    model = pickle.load(file)
+
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(page_title="Stroke Analytics App", layout="wide")
 
@@ -178,4 +187,5 @@ elif page == "🧠 Insights":
     • Supports preventive healthcare  
     • Assists doctors in decision-making  
     • Improves patient risk monitoring  
+
     """)

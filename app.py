@@ -54,7 +54,14 @@ import streamlit as st
 import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
+import os
+import joblib
 
+if os.path.exists("model.pkl"):
+    model = joblib.load("model.pkl")
+else:
+    st.error("Model file not found")
+    st.stop()
 import joblib
 
 model = joblib.load("model.pkl")
@@ -189,3 +196,4 @@ elif page == "🧠 Insights":
     • Improves patient risk monitoring  
 
     """)
+

@@ -1,0 +1,101 @@
+import pandas as pd 
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+df=pd.read_csv("healthcare-dataset-stroke-data.csv")
+df
+
+df.isnull().sum()
+
+df['bmi']=df['bmi'].fillna(df['bmi'].mean())
+df
+
+df.duplicated().sum()
+
+plt.figure(figsize=(8,3))
+sns.countplot(x="gender",data=df,color='red')
+plt.title('Heart Dataset Gender Distribution')
+plt.xlabel('Gender')
+plt.ylabel('Count of Gender')
+plt.show()
+
+plt.figure(figsize=(8,3))
+sns.barplot(x="work_type",y='age',data=df,color='blue')
+plt.title('Work Type vs Age')
+plt.xlabel('Work Type')
+plt.ylabel('Age')
+plt.show()
+
+counts=df['work_type'].value_counts()
+counts
+
+Work_counts = df['work_type'].value_counts()
+plt.figure(figsize=(8,6))
+plt.pie(Work_counts, labels=['Private', 'Self Employed','Children','Govt_Type','Never_Worked'],colors=['red', 'green','yellow','blue','purple','orange'],autopct='%1.1f%%')
+plt.title('Work Type Distribution')
+plt.show()
+
+import numpy as np
+from scipy import stats
+sample_size=2500
+x=np.random.choice(df['bmi'],sample_size)
+y=np.random.choice(df['stroke'],sample_size)
+print(x)
+print(y)
+
+t_stat, p_value = stats.ttest_ind(x,y)
+print('t-statistic:', round(t_stat, 2))
+print('p-value:', round(p_value, 4))
+
+df.drop(['ever_married'], axis=1, inplace=True)
+df
+
+from sklearn.preprocessing import LabelEncoder
+le=LabelEncoder()
+df["gender"]=le.fit_transform(df["gender"])
+df["work_type"]=le.fit_transform(df["work_type"])
+df["Residence_type"]=le.fit_transform(df["Residence_type"])
+df["smoking_status"]=le.fit_transform(df["smoking_status"])
+df
+
+x=df.drop(["stroke"],axis=1)
+
+y=df["stroke"]
+x
+
+y
+
+from sklearn.preprocessing import StandardScaler
+sc=StandardScaler()
+x=sc.fit_transform(x)
+x
+
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=42)
+print(x_train.shape)
+print(x_test.shape)
+print(y_train.shape)
+print(y_test.shape)
+
+from sklearn.linear_model import LogisticRegression
+lr=LogisticRegression()
+lr.fit(x_train,y_train)
+y_pred=lr.predict(x_test)
+y_pred
+
+from sklearn.metrics import accuracy_score,confusion_matrix,classification_report
+print(accuracy_score(y_test,y_pred))
+print(confusion_matrix(y_test,y_pred))
+print(classification_report(y_test,y_pred))
+
+from sklearn.linear_model import LogisticRegression
+lr=LogisticRegression()
+lr.fit(x_test,y_test)
+y_pred=lr.predict(x_test)
+y_pred
+
+from sklearn.metrics import accuracy_score,confusion_matrix,classification_report
+print(accuracy_score(y_test,y_pred))
+print(confusion_matrix(y_test,y_pred))
+print(classification_report(y_test,y_pred))

@@ -56,7 +56,15 @@ import pickle
 import matplotlib.pyplot as plt
 import os
 import joblib
+import os
+import joblib
 
+if os.path.exists("model.pkl"):
+    model = joblib.load("model.pkl")
+else:
+    st.error("Model file not found")
+    st.stop()
+    
 if os.path.exists("model.pkl"):
     model = joblib.load("model.pkl")
 else:
@@ -196,4 +204,5 @@ elif page == "🧠 Insights":
     • Improves patient risk monitoring  
 
     """)
+
 
